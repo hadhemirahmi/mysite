@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmation de suppression{% endblock %}
+
+{% block content %}
+<h1>Confirmation de suppression</h1>
+<p>Êtes-vous sûr de vouloir supprimer "{{ jeu.name }}" ?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Supprimer</button>
+    <a href="{% url 'jeu_detail' jeu.id %}">Annuler</a>
+</form>
+{% endblock %}

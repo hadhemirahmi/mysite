@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %} Notre Blog {% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+        <h1 class="display-5 fw-bold text-dark mb-2">Dernières Nouvelles</h1>
+        <p class="text-muted lead mb-0">Partagez vos expériences et découvrez celles des autres.</p>
+    </div>
+    <a href="{% url 'post_create' %}" class="btn btn-warning px-4 py-2 rounded-pill shadow-sm border-0 text-white" style="background: #f59e0b;">
+        <i class="fa-solid fa-pen-fancy me-2"></i> Nouvel Article
+    </a>
+</div>
+
+<div class="row g-4">
+    {% for post in posts %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative">
+            <div class="p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-warning-soft text-warning rounded-pill px-3 py-1 small fw-bold" style="background: rgba(245, 158, 11, 0.1);">
+                        {{ post.created_on|date:"d M Y" }}
+                    </div>
+                </div>
+                <h3 class="h4 fw-bold mb-3">
+                    <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark hover-primary">{{ post.title }}</a>
+                </h3>
+                <p class="text-muted mb-4">{{ post.content|truncatewords:20 }}</p>
+                
+                <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <a href="{% url 'post_detail' post.pk %}" class="text-primary fw-bold text-decoration-none">
+                        Lire la suite <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </a>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'post_update' post.pk %}" class="text-muted" title="Modifier">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a href="{% url 'post_delete' post.pk %}" class="text-danger" title="Supprimer">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <div class="mb-4">
+            <i class="fa-solid fa-newspaper fa-4x text-muted opacity-25"></i>
+        </div>
+        <h3>Aucun article pour le moment</h3>
+        <p class="text-muted mb-4">Soyez le premier à écrire sur notre blog !</p>
+        <a href="{% url 'post_create' %}" class="btn btn-warning rounded-pill px-4 text-white" style="background: #f59e0b;">Écrire un article</a>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .hover-primary:hover {
+        color: var(--primary) !important;
+    }
+</style>
+{% endblock %}

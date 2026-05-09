@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Gestion de magasin de jeux video{% endblock %}</title>
+</head>
+<body>
+    <h1>Gestion de magasin de jeux video</h1>
+    <a href="{% url 'jeu_list' %}">Liste des jeux</a>
+    <a href="{% url 'jeu_create' %}">Créer un jeu</a>
+    {% block content %}  
+    {% endblock %}
+    
+</body>
+</html>

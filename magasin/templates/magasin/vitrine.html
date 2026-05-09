@@ -1,0 +1,47 @@
+{% extends 'magasin/base.html' %}
+{% load static %}
+
+{% block title %} Vitrine Numérique {% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h2 class="display-6 fw-bold text-primary">Notre Vitrine</h2>
+    <p class="text-muted">Aperçu rapide de nos meilleurs articles</p>
+</div>
+
+<div class="row g-2">
+    {% for article in list %}
+    <div class="col-6 col-md-4 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative group">
+            <div class="ratio ratio-1x1 bg-light">
+                {% if article.Img %}
+                <img src="{{ article.Img.url }}" class="object-fit-cover w-100 h-100" alt="{{ article.libelle }}">
+                {% else %}
+                <div class="d-flex align-items-center justify-content-center h-100 text-muted opacity-25">
+                    <i class="fa-solid fa-image fa-3x"></i>
+                </div>
+                {% endif %}
+            </div>
+            <div class="position-absolute bottom-0 start-0 end-0 p-3 bg-white bg-opacity-75 backdrop-blur border-top">
+                <h6 class="mb-1 fw-bold text-truncate">{{ article.libelle }}</h6>
+                <p class="mb-0 text-primary fw-bold small">{{ article.prix }} DT</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <p class="text-muted">La vitrine est vide pour le moment.</p>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .backdrop-blur {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    .object-fit-cover {
+        object-fit: cover;
+    }
+</style>
+{% endblock %}

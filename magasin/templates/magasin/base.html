@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block layout %}
+<div class="container-fluid">
+    <div class="row">
+        <aside class="col-lg-2 col-md-3 sidebar d-none d-md-block p-4" style="min-height: calc(100vh - 70px);">
+            <h6 class="sidebar-title mb-4">Navigation Magasin</h6>
+            <div class="list-group list-group-flush shadow-sm rounded-4 overflow-hidden border">
+                <a href="{% url 'index' %}" class="list-group-item list-group-item-action {% if not request.GET.categorie %}active-category{% endif %} py-3 border-0">
+                    <i class="fa-solid fa-boxes-stacked me-2"></i> Catalogue
+                </a>
+                <a href="{% url 'nouveauFournisseur' %}" class="list-group-item list-group-item-action {% if 'Fournisseur' in request.path %}active-category{% endif %} py-3 border-0">
+                    <i class="fa-solid fa-truck-field me-2"></i> Fournisseurs
+                </a>
+                <a href="{% url 'vitrine' %}" class="list-group-item list-group-item-action {% if 'vitrine' in request.path %}active-category{% endif %} py-3 border-0">
+                    <i class="fa-solid fa-store me-2"></i> Vitrine
+                </a>
+            </div>
+
+            <h6 class="sidebar-title mt-5 mb-4">Catégories</h6>
+            <div class="list-group list-group-flush shadow-sm rounded-4 overflow-hidden border">
+                {% for categorie in categories %}
+                <a href="{% url 'index' %}?categorie={{ categorie.id }}" 
+                   class="list-group-item list-group-item-action {% if request.GET.categorie == categorie.id|stringformat:'i' %}active-category{% endif %} py-3 border-0">
+                    <i class="fa-solid fa-chevron-right me-2 small"></i> {{ categorie.nom }}
+                </a>
+                {% empty %}
+                <div class="list-group-item text-muted small py-3">Aucune catégorie</div>
+                {% endfor %}
+            </div>
+        </aside>
+
+        <main class="col-lg-10 col-md-9 p-0 bg-white">
+            <div class="p-4 p-lg-5">
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-4 shadow-sm border-0" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <div class="fade-in">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %} Connexion {% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-5">
+    <div class="col-md-5">
+        <div class="card border-0 shadow-lg rounded-5 overflow-hidden">
+            <div class="card-body p-5">
+                <div class="text-center mb-5">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fa-solid fa-lock fa-2x"></i>
+                    </div>
+                    <h2 class="fw-bold text-dark">Bienvenue</h2>
+                    <p class="text-muted">Connectez-vous pour accéder à votre espace</p>
+                </div>
+
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                    <div class="alert alert-danger border-0 rounded-4 mb-4">
+                        <i class="fa-solid fa-circle-exclamation me-2"></i> Identifiants incorrects.
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Nom d'utilisateur</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 rounded-start-4"><i class="fa-solid fa-user text-muted"></i></span>
+                            <input type="text" name="username" class="form-control bg-light border-start-0 rounded-end-4 py-3" placeholder="Votre nom" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Mot de passe</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 rounded-start-4"><i class="fa-solid fa-key text-muted"></i></span>
+                            <input type="password" name="password" class="form-control bg-light border-start-0 rounded-end-4 py-3" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="remember">
+                            <label class="form-check-label text-muted small" for="remember">Se souvenir de moi</label>
+                        </div>
+                        <a href="{% url 'password_reset' %}" class="text-primary text-decoration-none small">Oublié ?</a>
+                    </div>
+
+                    <div class="d-grid mb-4">
+                        <button type="submit" class="btn btn-primary py-3 rounded-pill fw-bold shadow-sm">
+                            Se connecter
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <span class="text-muted small">Pas encore de compte ?</span>
+                        <a href="{% url 'register' %}" class="text-primary fw-bold text-decoration-none ms-1">S'inscrire</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ jeu.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ jeu.name }}</h1>
+<p>{{ jeu.description }}</p>
+<p>Date de sortie : {{ jeu.release_date }}</p>
+<p>Genre : {{ jeu.genre }}</p>
+<p>Développeur : {{ jeu.developer }}</p>
+<p>Éditeur : {{ jeu.publisher }}</p>
+{% if jeu.image %}
+<img src="{{ jeu.image.url }}" alt="{{ jeu.name }}">
+{% endif %}
+<a href="{% url 'jeu_update' jeu.id %}">Modifier</a>
+<a href="{% url 'jeu_delete' jeu.id %}">Supprimer</a>
+<a href="{% url 'jeu_list' %}">Retour à la liste</a>
+{% endblock %}
